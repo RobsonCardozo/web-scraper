@@ -1,24 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-
-
-def get_categories(soup):
-    categories = []
-    categories_list = soup.find_all("div", {"class": "catlinks"})
-    if categories_list:
-        categories_list = categories_list[0].find_all("li")
-        categories = [category.text for category in categories_list]
-    return categories
-
+import random
 
 def extract_data_to_json():
     api_endpoint = "https://en.wikipedia.org/w/api.php"
+    random_title = random.choice(requests.get(api_endpoint, params={
+        "action": "query",
+        "format": "json",
+        "list": "random",
+        "rnnamespace": "0",
+        "rnlimit": "1"
+    }).json()["query"]["random"])["title"]
     params = {
         "action": "query",
         "format": "json",
-        "titles": "Python_(programming_language)",
-        "prop": "info|extracts|categories|images|extlinks",
+        "titles": random_title,
+        "prop": "categories|images|extlinks",
         "cllimit": "max",
         "imlimit": "max",
         "ellimit": "max"
@@ -29,11 +27,10 @@ def extract_data_to_json():
         try:
             page_data = response.json()["query"]["pages"]
             for _, page in page_data.items():
-                soup = BeautifulSoup(page["extract"], "html.parser")
-                data["title"] = page.get("title", "")
-                data["categories"] = get_categories(soup)
+                data["categories"] = [category["title"] for category in page.get("categories", [])]
                 data["images"] = [image["title"] for image in page.get("images", [])]
                 data["external_links"] = [link["*"] for link in page.get("extlinks", [])]
+                data["title"] = page.get("title", "")
             with open("data.json", "w") as f:
                 json.dump(data, f, indent=4)
         except KeyError:
