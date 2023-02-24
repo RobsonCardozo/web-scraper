@@ -16,13 +16,15 @@ def extract_data_to_json():
         "action": "query",
         "format": "json",
         "titles": random_title,
-        "prop": "categories|images|extlinks",
+        "prop": "categories|images|extlinks|extracts",
         "cllimit": "max",
         "imlimit": "max",
-        "ellimit": "max"
+        "ellimit": "max",
+        "exintro": "1",
+        "explaintext": "1"
     }
     response = requests.get(api_endpoint, params=params)
-    data = {"title": "", "categories": []}
+    data = {"title": "", "categories": [], "images": [], "external_links": [], "description": ""}
     if response.ok:
         try:
             page_data = response.json()["query"]["pages"]
@@ -31,6 +33,7 @@ def extract_data_to_json():
                 data["images"] = [image["title"] for image in page.get("images", [])]
                 data["external_links"] = [link["*"] for link in page.get("extlinks", [])]
                 data["title"] = page.get("title", "")
+                data["description"] = page.get("extract", "")
             with open("data.json", "w") as f:
                 json.dump(data, f, indent=4)
         except KeyError:
@@ -39,3 +42,5 @@ def extract_data_to_json():
             print(response.content)
     else:
         print(f"Failed to retrieve data from the Wikipedia API. Status code: {response.status_code}")
+
+extract_data_to_json()
