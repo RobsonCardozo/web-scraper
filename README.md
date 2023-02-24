@@ -1,2 +1,2 @@
 # web-scraper
-BeautifulSoup
+BeautifulSoup, Pymongo
