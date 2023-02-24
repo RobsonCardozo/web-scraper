@@ -1,12 +1,10 @@
 import tkinter as tk
 
 def display_data_in_gui(data):
-    # Create a Tkinter window to display the data
     window = tk.Tk()
     window.title("Wikipedia Categories")
     window.geometry("600x400")
 
-    # Create labels to display the data
     title_label = tk.Label(window, text=f"Title: {data['title']}", font=("Arial", 14))
     title_label.pack(pady=10)
 
@@ -22,8 +20,11 @@ def display_data_in_gui(data):
     external_links_label = tk.Label(window, text=f"External Links: {', '.join(data['external_links'])}", font=("Arial", 12), wraplength=500, justify="left")
     external_links_label.pack(pady=10)
 
-    # Create a button to close the window
-    close_button = tk.Button(window, text="Close", command=window.destroy)
+    def close_window():
+        if window.winfo_exists():
+            window.destroy()
+
+    close_button = tk.Button(window, text="Close", command=close_window)
     close_button.pack(pady=10)
 
     window.mainloop()

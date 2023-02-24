@@ -17,10 +17,11 @@ db = client[MONGODB_DB_NAME]
 collection = db[MONGODB_COLLECTION_NAME]
 
 data = extract_data_to_json()
-
-# Store data in MongoDB collection
 result = collection.insert_one(data)
+
 print(f"Inserted data with ID {result.inserted_id} into collection {MONGODB_COLLECTION_NAME}")
 
-# Display data in GUI window
-display_data_in_gui(data)
+if data:
+    display_data_in_gui(data)
+else:
+    print("Data is empty, cannot display in GUI.")
