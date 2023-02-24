@@ -4,11 +4,10 @@ import json
 
 
 def extract_data_to_json():
-    api_endpoint = "https://test.wikipedia.org/w/api.php"
+    api_endpoint = "https://en.wikipedia.org/w/api.php"
     params = {
         "action": "parse",
         "format": "json",
-        "page": "Special:Random",
         "prop": "text|categories|references"
     }
     response = requests.get(api_endpoint, params=params)
