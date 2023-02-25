@@ -1,6 +1,9 @@
-import pymongo
-from dotenv import load_dotenv
 import os
+import sys
+import json
+import pymongo
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -16,9 +19,7 @@ def get_collection():
     return collection
 
 
-def insert_data_from_json_file(json_file_path):
-    with open(json_file_path) as f:
-        data = json.load(f)
+def insert_data(data):
     collection = get_collection()
     result = collection.insert_one(data)
     print(

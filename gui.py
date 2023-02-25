@@ -1,8 +1,10 @@
-import tkinter as tk
+import os
+import sys
 import json
+import tkinter as tk
 
 
-def display_data_in_gui(data):
+def display_data(data):
     if not data:
         print("Data is empty, cannot display in GUI.")
         return
@@ -58,3 +60,13 @@ def display_data_in_gui(data):
     close_button.pack(pady=10)
 
     window.mainloop()
+
+if __name__ == "__main__":
+    data = {
+        "title": "Example Title",
+        "description": "Example Description",
+        "categories": ["Category 1", "Category 2", "Category 3"],
+        "images": ["Image 1", "Image 2", "Image 3"],
+        "external_links": ["Link 1", "Link 2", "Link 3"],
+    }
+    display_data(data)
