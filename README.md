@@ -1,2 +1,2 @@
-# My Web-Scraper 1.0
+# Web-Scraper
 BeautifulSoup, Tkinter, Pymongo.
