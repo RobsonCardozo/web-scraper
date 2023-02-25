@@ -1,6 +1,12 @@
 import tkinter as tk
+import json
+
 
 def display_data_in_gui(data):
+    if not data:
+        print("Data is empty, cannot display in GUI.")
+        return
+
     window = tk.Tk()
     window.title("Wikipedia Categories")
     window.geometry("600x400")
@@ -8,16 +14,40 @@ def display_data_in_gui(data):
     title_label = tk.Label(window, text=f"Title: {data['title']}", font=("Arial", 14))
     title_label.pack(pady=10)
 
-    description_label = tk.Label(window, text=f"Description: {data['description']}", font=("Arial", 12), wraplength=500, justify="left")
+    description_label = tk.Label(
+        window,
+        text=f"Description: {data['description']}",
+        font=("Arial", 12),
+        wraplength=500,
+        justify="left",
+    )
     description_label.pack(pady=10)
 
-    categories_label = tk.Label(window, text=f"Categories: {', '.join(data['categories'])}", font=("Arial", 12), wraplength=500, justify="left")
+    categories_label = tk.Label(
+        window,
+        text=f"Categories: {', '.join(data['categories'])}",
+        font=("Arial", 12),
+        wraplength=500,
+        justify="left",
+    )
     categories_label.pack(pady=10)
 
-    images_label = tk.Label(window, text=f"Images: {', '.join(data['images'])}", font=("Arial", 12), wraplength=500, justify="left")
+    images_label = tk.Label(
+        window,
+        text=f"Images: {', '.join(data['images'])}",
+        font=("Arial", 12),
+        wraplength=500,
+        justify="left",
+    )
     images_label.pack(pady=10)
 
-    external_links_label = tk.Label(window, text=f"External Links: {', '.join(data['external_links'])}", font=("Arial", 12), wraplength=500, justify="left")
+    external_links_label = tk.Label(
+        window,
+        text=f"External Links: {', '.join(data['external_links'])}",
+        font=("Arial", 12),
+        wraplength=500,
+        justify="left",
+    )
     external_links_label.pack(pady=10)
 
     def close_window():
