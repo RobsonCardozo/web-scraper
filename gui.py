@@ -62,11 +62,6 @@ def display_data(data):
     window.mainloop()
 
 if __name__ == "__main__":
-    data = {
-        "title": "Example Title",
-        "description": "Example Description",
-        "categories": ["Category 1", "Category 2", "Category 3"],
-        "images": ["Image 1", "Image 2", "Image 3"],
-        "external_links": ["Link 1", "Link 2", "Link 3"],
-    }
+    with open("example.json", "r") as f:
+        data = json.load(f)
     display_data(data)

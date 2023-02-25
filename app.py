@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import logging
 
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -19,6 +20,8 @@ client = MongoClient(MONGODB_URI)
 db = client[MONGODB_DB_NAME]
 collection = db[MONGODB_COLLECTION_NAME]
 
+logging.basicConfig(level=logging.INFO)
+
 def memory_card(data):
     with open("data.json", "w") as f:
         json.dump(data, f)
@@ -27,11 +30,11 @@ try:
     data = extract_data(memory_card)
     if data:
         result = collection.insert_one(data)
-        print(
-            f"Inserted data with ID {result.inserted_id} into collection {MONGODB_COLLECTION_NAME}"
-        )
+        logging.info(f"Inserted data with ID {result.inserted_id} into collection {MONGODB_COLLECTION_NAME}")
         display_data(data)
     else:
-        print("Data is empty, cannot display in GUI.")
+        logging.warning("Data is empty, cannot display in GUI.")
 except Exception as e:
-    print(f"Failed to insert data into collection {MONGODB_COLLECTION_NAME}: {e}")
+    logging.error(f"Failed to insert data into collection {MONGODB_COLLECTION_NAME}: {e}")
+finally:
+    client.close()
